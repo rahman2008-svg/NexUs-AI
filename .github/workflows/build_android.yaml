@@ -6,20 +6,16 @@ on:
     branches: [ "main" ]
     paths:
       - 'Android/**'
-  pull_request:
-    branches: [ "main" ]
-    paths:
-      - 'Android/**'
 
 jobs:
-  build_apk:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Java
+      - name: Set up Java 17
         uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -28,11 +24,15 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Grant permission
+      - name: Fix Gradle permissions
         run: chmod +x Android/src/gradlew
 
+      - name: Create local.properties
+        run: |
+          echo "sdk.dir=$ANDROID_HOME" > Android/src/local.properties
+
       - name: Build APK
-        run: cd Android/src && ./gradlew assembleDebug
+        run: cd Android/src && ./gradlew clean assembleDebug --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
