@@ -13,11 +13,10 @@ on:
 
 jobs:
   build_apk:
-    name: Build Android APK
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout source code
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Set up Java
@@ -26,13 +25,16 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
       - name: Grant permission
         run: chmod +x Android/src/gradlew
 
-      - name: Build Debug APK
+      - name: Build APK
         run: cd Android/src && ./gradlew assembleDebug
 
-      - name: Upload APK Artifact
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: app-debug
