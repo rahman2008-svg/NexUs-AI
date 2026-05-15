@@ -1,13 +1,18 @@
 workflows:
   android-build:
-    name: Android APK Build
+    name: Build Android APK
 
     environment:
-      java: 17
+      java: 21
 
     scripts:
+      - name: Change directory
+        script: cd Android/src
+
       - name: Make gradlew executable
-        script: chmod +x Android/src/gradlew
+        script: |
+          cd Android/src
+          chmod +x gradlew
 
       - name: Build APK
         script: |
@@ -15,4 +20,4 @@ workflows:
           ./gradlew assembleDebug
 
     artifacts:
-      - Android/src/app/build/outputs/apk/debug/*.apk
+      - Android/src/app/build/outputs/**/*.apk
