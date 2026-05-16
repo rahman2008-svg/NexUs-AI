@@ -1,1 +1,1 @@
-# Google AI Edge Gallery (Android)
+# NexUs AI (Android)
