@@ -358,7 +358,7 @@
   <string name="mcp_tool_description" translatable="false">Description</string>
   <string name="mcp_tool_schema" translatable="false">Schema</string>
   <string name="mcp_disclaimer_dialog_title" translatable="false">Add external AI server</string>
-  <string name="mcp_disclaimer_dialog_content" translatable="false">External AI servers are not authored or endorsed by Nexvora Lab's Ofc. Use at your own risk. Do not share sensitive information such as API keys or personal data.</string>
+  <string name="mcp_disclaimer_dialog_content" translatable="false">External AI servers are not authored or endorsed by Nexvora Labs. Use at your own risk. Do not share sensitive information such as API keys or personal data.</string>
   <string name="mcp_server_duplicate_title" translatable="false">Duplicate MCP server</string>
   <string name="mcp_server_duplicate_content" translatable="false">This server is already added..</string>
   <string name="mcp_server_authorization" translatable="false">Authorization</string>
