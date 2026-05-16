@@ -35,9 +35,9 @@
   <string name="askimage_emptystate_content_aicore" translatable="false">To get started, tap the + below to add an image (max 1 image per chat) and type a prompt to ask a question about it!</string>
   <string name="askaudio_emptystate_title" translatable="false">Voice AI</string>
   <string name="askaudio_emptystate_content" translatable="false">Add an audio clip and use AI to transcribe or translate it.</string>
-  <string name="gallery_news_notification_title" translatable="false">Gallery News</string>
+  <string name="gallery_news_notification_title" translatable="false">Nexus AI Updates</string>
   <string name="baseline" translatable="false">Baseline</string>
-  <string name="basic_info" translatable="false">Basic info</string>
+  <string name="basic_info" translatable="false">System Info</string>
   <string name="benchmark" translatable="false">Benchmark</string>
   <string name="benchmark_comparison_help_title" translatable="false">How to compare benchmark runs</string>
   <string name="benchmark_comparison_help_content" translatable="false">Compare benchmark runs by tapping the **Baseline** chip on any run result card to set the run as the comparison baseline. We\'ll automatically calculate and display the percentage differences in **all other** run result cards.</string>
