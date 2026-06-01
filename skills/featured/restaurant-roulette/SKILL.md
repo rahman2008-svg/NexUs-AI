@@ -1,30 +1,57 @@
----
 name: restaurant-roulette
-description: Show a roulette wheel to allow user to randomly select a restaurant based on location and cuisine.
+description: Display a roulette wheel that randomly selects restaurants based on user location and cuisine preference.
+
 metadata:
   require-secret: true
-  require-secret-description: you can get api key from https://ai.google.dev/gemini-api/docs/api-key
+  require-secret-description: Obtain your API key from https://ai.google.dev/gemini-api/docs/api-key
   homepage: https://github.com/google-ai-edge/gallery/tree/main/skills/featured/restaurant-roulette
 ---
 
-# Restaurant Roulette
+# 🍽️ Restaurant Roulette Skill
 
-This skill searches for up to 10 restaurants matching a specific cuisine and location in a spin wheel.
+A fun interactive roulette wheel that helps users discover restaurants based on **location** and **cuisine type**.
 
-## Examples
+This skill enhances decision-making by letting users spin a wheel instead of manually choosing.
 
-* "Suggest Mexican food in San Jose."
-* "Find a random Italian restaurant near Sunnyvale."
-* "Where should I get Sushi in San Francisco today?"
-* "Show a restaurant roulette for Indian food in Palo Alto."
+---
 
-## Instructions
+## 🎯 How It Works
 
-Call the `run_js` tool with the following exact parameters:
-- data: A JSON string with the following fields
-  - location: the target city or location (e.g., "San Jose", "Sunnyvale", "San Francisco").
-  - cuisine: the style of food or cuisine desired (e.g., "Mexican", "Italian", "Indian", "Sushi").
+The system fetches up to **10 restaurants** matching:
+- 📍 User location  
+- 🍜 Selected cuisine type  
 
-DO NOT use any other tool, DO NOT call `run_intent`.
+Then displays them in a **spinning roulette wheel UI**.
 
-IMPORTANT: When the wheel is generated, DO NOT pick a winner for the user or make up a restaurant. Simply return the requested webview and tell the user to tap the preview card to spin the wheel themselves.
+---
+
+## 🧪 Example Prompts
+
+You can trigger this skill using natural language:
+
+- “Suggest Mexican food in San Jose”
+- “Find a random Italian restaurant near Sunnyvale”
+- “Where should I get Sushi in San Francisco today?”
+- “Show a restaurant roulette for Indian food in Palo Alto”
+
+---
+
+## ⚙️ Instructions
+
+When triggered, you MUST:
+
+1. Call the `run_js` tool  
+2. Pass a JSON string containing:
+
+   - `location` → City or area name  
+   - `cuisine` → Type of food  
+
+---
+
+### 📦 Example Payload
+
+```json
+{
+  "location": "San Jose",
+  "cuisine": "Mexican"
+}
