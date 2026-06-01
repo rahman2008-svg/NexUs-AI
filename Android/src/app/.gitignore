@@ -1,4 +1,7 @@
-# @license
+# NexUs AI Project
+# Company: NexVora Lab's Ofc
+
+@license
 # Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,5 +17,7 @@
 # limitations under the License.
 # ==============================================================================
 
-/build
-/release
+# Build outputs (Android)
+/gradle/
+/build/
+/release/
