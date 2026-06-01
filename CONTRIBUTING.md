@@ -1,4 +1,2 @@
-The repository is not currently ready for code contributions. We will
-make a separate announcement when we are ready for OSS users to make
-contributions to it.
-
+This repository is not currently open for external code contributions.
+We will publish a separate announcement once it is ready to accept contributions from the open-source community.
