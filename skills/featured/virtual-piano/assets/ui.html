@@ -21,8 +21,8 @@ limitations under the License.
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  
-  <title>3D 88-Key Virtual Piano | NexUs AI</title>
+
+  <title>88-Key Virtual Piano | NexUs AI</title>
 
   <style>
     body {
@@ -57,6 +57,7 @@ limitations under the License.
       background: #222;
       padding: 10px 10px 0;
       border-radius: 12px;
+
       box-shadow:
         0 10px 30px rgba(0, 0, 0, 0.8),
         inset 0 2px 5px rgba(255, 255, 255, 0.1);
@@ -74,7 +75,7 @@ limitations under the License.
       flex-shrink: 0;
     }
 
-    /* Scroll label */
+    /* Scroll hint */
     #scroll-lip {
       height: 60px;
       background: linear-gradient(to bottom, #333, #1a1a1a);
@@ -86,7 +87,7 @@ limitations under the License.
       align-items: center;
       justify-content: center;
 
-      color: #666;
+      color: #777;
       font-family: sans-serif;
       font-size: 14px;
       font-weight: bold;
@@ -112,9 +113,9 @@ limitations under the License.
       padding-bottom: 15px;
 
       font-family: sans-serif;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: bold;
-      color: #aaa;
+      color: #999;
 
       cursor: pointer;
       user-select: none;
@@ -153,6 +154,7 @@ limitations under the License.
 
       cursor: pointer;
       box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.5);
+
       -webkit-tap-highlight-color: transparent;
     }
 
@@ -176,19 +178,19 @@ limitations under the License.
   <script>
     const keyContainer = document.getElementById("key-container");
 
-    const noteNames = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
+    const NOTES = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
 
     let noteNumber = 1;
 
     /* -------------------------
-       1. GENERATE PIANO KEYS
+       1. GENERATE KEYS
     ------------------------- */
     while (noteNumber <= 88) {
       const group = document.createElement("div");
       group.className = "key-group";
 
       const offset = (noteNumber + 8) % 12;
-      const noteName = noteNames[offset];
+      const noteName = NOTES[offset];
       const octave = Math.floor((noteNumber + 8) / 12);
 
       // WHITE KEY
@@ -196,6 +198,7 @@ limitations under the License.
       whiteKey.className = "key white";
       whiteKey.dataset.note = noteNumber;
       whiteKey.innerText = noteName + octave;
+
       group.appendChild(whiteKey);
 
       // BLACK KEY (if valid)
@@ -205,6 +208,7 @@ limitations under the License.
         const blackKey = document.createElement("div");
         blackKey.className = "key black";
         blackKey.dataset.note = noteNumber;
+
         group.appendChild(blackKey);
       }
 
@@ -224,35 +228,39 @@ limitations under the License.
     const keys = document.querySelectorAll(".key");
 
     keys.forEach((key) => {
-      key.addEventListener("pointerdown", function (e) {
-        e.stopPropagation();
-
-        const note = this.dataset.note;
+      const playSound = () => {
+        const note = key.dataset.note;
         const audio = audioNotes[note];
 
-        if (audio) {
+        if (!audio) return;
+
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+
+        key.classList.add("active");
+
+        setTimeout(() => {
+          audio.pause();
           audio.currentTime = 0;
-          audio.play().catch(() => {});
+        }, 2000);
+      };
 
-          this.classList.add("active");
-
-          setTimeout(() => {
-            audio.pause();
-            audio.currentTime = 0;
-          }, 2000);
-        }
+      key.addEventListener("pointerdown", (e) => {
+        e.stopPropagation();
+        playSound();
       });
 
-      key.addEventListener("pointerup", () => key.classList.remove("active"));
-      key.addEventListener("pointerleave", () => key.classList.remove("active"));
-      key.addEventListener("pointercancel", () => key.classList.remove("active"));
+      ["pointerup", "pointerleave", "pointercancel"].forEach(evt => {
+        key.addEventListener(evt, () => key.classList.remove("active"));
+      });
     });
 
     /* -------------------------
-       3. AUTO CENTER (Middle C)
+       3. CENTER MIDDLE C
     ------------------------- */
     setTimeout(() => {
       const middleC = document.querySelector('.key.white[data-note="40"]');
+
       if (middleC) {
         middleC.scrollIntoView({
           behavior: "auto",
