@@ -1,6 +1,9 @@
-// Bundle config for the Google AI Edge Gallery app.
+// Bundle config for NexUs AI app.
 // See: https://developer.android.com/studio/build/building-cmdline#bundleconfig
 {
+  "appName": "NexUs AI",
+  "company": "NexVora Lab's Ofc",
+
   "optimizations": {
     "uncompress_native_libraries": {
       "enabled": false
