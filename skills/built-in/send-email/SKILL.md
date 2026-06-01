@@ -1,16 +1,27 @@
----
+--
 name: send-email
-description: Send an email.
+description: Send an email to a specified recipient with subject and message body.
 ---
 
-# Send email
+# 📧 Send Email Skill
 
-## Instructions
+This skill allows the system to send an email to a user-defined recipient with a subject and message body.
 
-Call the `run_intent` tool with the following exact parameters:
+---
 
-- intent: send_email
-- parameters: A JSON string with the following fields:
-  - extra_email: the email address to send the email to. String.
-  - extra_subject: the subject of the email. String.
-  - extra_text: the body of the email. String.
+## ⚙️ Instructions
+
+You MUST call the `run_intent` tool with the following exact parameters:
+
+### 🔹 intent
+- `send_email`
+
+### 🔹 parameters
+A JSON string containing the following fields:
+
+```json
+{
+  "extra_email": "recipient email address (string)",
+  "extra_subject": "email subject (string)",
+  "extra_text": "email body content (string)"
+}
