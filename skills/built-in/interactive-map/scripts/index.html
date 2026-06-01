@@ -1,6 +1,6 @@
 <!--
 @license
-Copyright 2026 Google LLC
+Copyright 2026 NexVora Lab's Ofc
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,36 +13,51 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-==============================================================================
 -->
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Interactive map</title>
-  </head>
-  <body>
-    <script>
-      window['ai_edge_gallery_get_result'] = async (data) => {
-        try {
-          const jsonData = JSON.parse(data);
-          const location = jsonData.location;
-          const encodedLocation = encodeURIComponent(location);
-          return JSON.stringify({
-            webview: {
-              iframe: true,
-              url: `https://maps.google.com/maps?q=${encodedLocation}&output=embed`,
-            },
-          });
-        } catch (e) {
-          console.error(e);
-          return JSON.stringify({error: `Failed to query location on map: ${e.message}`});
-        }
-      };
-    </script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexUs AI - Interactive Map</title>
+</head>
 
-  </body>
+<body>
+
+<script>
+window['ai_edge_gallery_get_result'] = async (data) => {
+  try {
+    const jsonData = JSON.parse(data || "{}");
+
+    if (!jsonData.location || typeof jsonData.location !== "string") {
+      throw new Error("Invalid or missing 'location' parameter");
+    }
+
+    const location = jsonData.location.trim();
+
+    if (location.length === 0) {
+      throw new Error("Location cannot be empty");
+    }
+
+    const encodedLocation = encodeURIComponent(location);
+
+    return JSON.stringify({
+      webview: {
+        iframe: true,
+        url: `https://maps.google.com/maps?q=${encodedLocation}&output=embed`
+      }
+    });
+
+  } catch (e) {
+    console.error("Map Error:", e);
+
+    return JSON.stringify({
+      error: `Failed to load map for location: ${e.message}`
+    });
+  }
+};
+</script>
+
+</body>
 </html>
