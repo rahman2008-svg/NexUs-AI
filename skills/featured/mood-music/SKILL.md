@@ -1,40 +1,71 @@
----
 name: mood-music
-description: A skill to suggest or play music based on the user's mood, including analyzing images or audio, by querying available genres and generating music via the Loudly API.
+description: Generate or suggest music based on user mood by analyzing text, images, or audio and using supported genres from the Loudly API.
+
 metadata:
   require-secret: true
-  require-secret-description: you can get api key from https://www.loudly.com/developers/apps after registering an account
+  require-secret-description: Get your API key from https://www.loudly.com/developers/apps after registering an account
   homepage: https://github.com/google-ai-edge/gallery/tree/main/skills/featured/mood-music
 ---
 
-# Mood Music
+# 🎧 Mood Music Skill
 
-## Instructions
+This skill generates or suggests music based on the user’s **mood, vibe, or media input (text, image, or audio)**.
 
-You MUST use a strict two-step process to generate music. This ensures you only request musical genres that are currently supported by the Loudly API.
+It uses the **Loudly API** to create music based on supported genres.
+
+---
+
+## ⚙️ Core Workflow (Strict Two-Step Process)
 
 ### Step 1: Fetch Available Genres
-Call the `run_js` tool with `get_genres.html` as the script name and an empty JSON payload (`{}`). 
-- This will return a list of currently available genres and their descriptions. 
-- You MUST review this list to understand the available musical palettes.
 
-### Step 2: Analyze and Generate
-Once you have the valid genres, map the user's request to the best fit and call `run_js` with `index.html` to generate the track.
+You MUST first call the `run_js` tool:
 
-**Handling Inputs:**
-- **Text Inputs**: Translate abstract mood requests into a concrete, matching genre from the fetched list, along with an appropriate energy level.
-- **Media Inputs (Images/Audio)**: If the user provides an image or audio clip, analyze the media to determine its underlying mood, atmosphere, or vibe. Translate this analysis strictly into one of the fetched genres.
+- Script: `get_genres.html`
+- Payload: `{}`
 
-**Generation Payload (for index.html):**
-Your JSON payload for `index.html` MUST strictly use these text fields to represent the vibe:
-- **genre**: String, Required. MUST be an exact match to a genre name retrieved in Step 1.
-- **genre_blend**: String, Optional. A secondary genre to blend (also from Step 1).
-- **duration**: Integer, Optional. Length in seconds (30-420). Default is 120.
-- **energy**: String, Optional. Vibe ("low", "high", "original").
-- **bpm**: Integer, Optional. Specific tempo in Beats Per Minute.
+📌 This returns:
+- List of available music genres
+- Genre descriptions
+- Supported audio styles
 
-### Invocation Triggers
-You should invoke this skill when the user:
-- Asks for music for a specific mood.
-- Asks for playlist ideas for a vibe.
-- Uploads an image or audio clip and asks for music to match it.
+👉 You MUST ONLY use these genres for generation.
+
+---
+
+### Step 2: Analyze & Generate Music
+
+After receiving genres:
+
+- Match user mood to the closest valid genre
+- Then call `run_js` with `index.html`
+
+---
+
+## 🎯 Input Handling Rules
+
+### 📝 Text Input
+- Convert mood (happy, sad, energetic, calm) into a valid genre
+- Select appropriate energy level
+
+---
+
+### 🖼️ Image / 🎧 Audio Input
+- Analyze visual/audio mood
+- Extract vibe (emotion, tone, atmosphere)
+- Map ONLY to valid genres from Step 1
+
+---
+
+## 🎼 Generation Payload (index.html)
+
+Your request MUST include the following structure:
+
+```json
+{
+  "genre": "string (required - must match available genre)",
+  "genre_blend": "string (optional secondary genre)",
+  "duration": 120,
+  "energy": "low | high | original",
+  "bpm": 120
+}
