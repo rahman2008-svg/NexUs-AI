@@ -1,11 +1,32 @@
----
 name: text-spinner
-description: Spin the given text on my head.
+description: Display animated spinning text effect above the user’s head.
+
 ---
 
-# Instructions
+# 🌀 Text Spinner
 
-You MUST use the `run_js` tool with the following exact parameters:
+A simple but visually engaging skill that **animates text spinning effect** on screen.
 
-- data: A JSON string with the following fields:
-  - label: The text string to spin on my head.
+## 🎯 Purpose
+
+This skill takes a text input and displays it as a **rotating / spinning animation effect**, creating a fun visual experience.
+
+---
+
+## ⚙️ Instructions
+
+You MUST call the `run_js` tool with the following structure:
+
+### 📦 Parameters
+
+- `data` → JSON string containing:
+  - `label` (string) → The text that will be displayed and animated
+
+---
+
+## 🚀 Example
+
+```json
+{
+  "label": "Hello NexUs AI 🚀"
+}
