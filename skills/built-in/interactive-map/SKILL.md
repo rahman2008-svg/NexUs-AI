@@ -1,18 +1,45 @@
----
 name: interactive-map
-description: Show an interactive map view for the given location.
+description: >
+  Displays an interactive map view for a given location using the run_js tool.
+  Triggered when the user requests to view, open, or explore a place on a map.
+
+version: 1.0
+author: NexVora Lab's Ofc
+category: mapping / visualization
+
 ---
 
-# Interactive map
+# 🗺 Interactive Map Tool
 
-## Examples
+## 🎯 Purpose
 
-- "Show [a place] on interactive map"
-- "Find [a place] on interactive map"
+This tool renders an interactive map for any requested location using a JavaScript-based map renderer.
 
-## Instructions
+It helps users:
+- Explore places visually
+- Navigate locations
+- Understand geography context
 
-Call the `run_js` tool with the following exact parameters:
+---
 
-- data: A JSON string with the following field
-  - location: The location to show on the map.
+## 🔥 Trigger Conditions
+
+Activate this tool when the user says:
+
+- "Show [place] on map"
+- "Open [location] in interactive map"
+- "Find [place] on map"
+- "View location of [place]"
+
+---
+
+## ⚙️ Execution Rule
+
+When triggered, you MUST call the `run_js` tool with the following structure:
+
+### 📦 Parameters
+
+```json
+{
+  "location": "string"
+}
