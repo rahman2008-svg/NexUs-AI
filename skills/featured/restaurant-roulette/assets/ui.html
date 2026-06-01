@@ -1,6 +1,6 @@
 <!--
 @license
-Copyright 2026 Google LLC
+Copyright 2026 NexUs AI
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,293 +18,269 @@ limitations under the License.
 
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-    <title>Roulette UI</title>
-    <style>
-      body {
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        background: #1e1e2f;
-        color: #fff;
-        font-family: sans-serif;
-        overflow: hidden;
-        touch-action: manipulation;
-        box-sizing: border-box;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-      h2 {
-        margin: 0 0 20px 0;
-        text-align: center;
-        font-size: 20px;
-        padding: 0 15px;
-      }
-      p.subtitle {
-        margin: 0 0 20px 0;
-        color: #aaa;
-        font-size: 14px;
-      }
+  <title>Restaurant Roulette Wheel | NexUs AI</title>
 
-      /* The perfectly sized, compact wheel container */
-      #wheel-container {
-        position: relative;
-        width: 240px;
-        height: 240px;
-        margin-bottom: 30px;
-        cursor: pointer;
-        -webkit-tap-highlight-color: transparent;
-      }
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: #1e1e2f;
+      color: #fff;
+      font-family: sans-serif;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
 
-      canvas {
-        width: 100%;
-        height: 100%;
-        filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.5));
-      }
+    h2 {
+      margin: 0 0 20px;
+      font-size: 20px;
+      text-align: center;
+      padding: 0 15px;
+    }
 
-      /* The little red arrow at the top */
-      #pointer {
-        position: absolute;
-        top: -15px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 0;
-        height: 0;
-        border-left: 12px solid transparent;
-        border-right: 12px solid transparent;
-        border-top: 24px solid #ff4757;
-        z-index: 10;
-        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
-        pointer-events: none;
-      }
+    p.subtitle {
+      margin: 0 0 20px;
+      font-size: 14px;
+      color: #aaa;
+    }
 
-      #spin-btn {
-        background: #ff4757;
-        color: white;
-        border: none;
-        padding: 15px 40px;
-        font-size: 18px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: bold;
-        box-shadow: 0 4px 10px rgba(255, 71, 87, 0.4);
-        -webkit-tap-highlight-color: transparent;
-      }
-      #spin-btn:active {
-        transform: scale(0.95);
-      }
-      #spin-btn:disabled {
-        background: #555;
-        cursor: not-allowed;
-        box-shadow: none;
-      }
+    /* Wheel container */
+    #wheel-container {
+      position: relative;
+      width: 240px;
+      height: 240px;
+      margin-bottom: 30px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-      /* Winner Pop-up Overlay */
-      #winner-overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.85);
-        z-index: 100;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        padding: 20px;
-        box-sizing: border-box;
-        backdrop-filter: blur(5px);
-      }
-      #winner-title {
-        color: #2ed573;
-        font-size: 28px;
-        font-weight: bold;
-        margin-bottom: 10px;
-      }
-      #winner-name {
-        color: #fff;
-        font-size: 36px;
-        font-weight: bold;
-        text-transform: uppercase;
-        text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-        margin-bottom: 30px;
-      }
-      #close-modal {
-        background: #fff;
-        color: #1e1e2f;
-        border: none;
-        padding: 12px 30px;
-        font-size: 16px;
-        font-weight: bold;
-        border-radius: 8px;
-        cursor: pointer;
-      }
-    </style>
-  </head>
-  <body>
-    <h2 id="title">Loading...</h2>
+    canvas {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 8px 15px rgba(0, 0, 0, 0.5));
+    }
 
-    <div id="wheel-container">
-      <div id="pointer"></div>
-      <!-- High-res 600x600 canvas ensures text is not blurry when shrunk by CSS -->
-      <canvas id="wheelCanvas" width="600" height="600"></canvas>
-    </div>
+    /* Pointer */
+    #pointer {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 12px solid transparent;
+      border-right: 12px solid transparent;
+      border-top: 24px solid #ff4757;
+      z-index: 10;
+      pointer-events: none;
+    }
 
-    <button id="spin-btn">SPIN ROULETTE</button>
+    /* Spin button */
+    #spin-btn {
+      background: #ff4757;
+      color: white;
+      border: none;
+      padding: 15px 40px;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(255, 71, 87, 0.4);
+    }
 
-    <div id="winner-overlay">
-      <div id="winner-title">🎉 WINNER! 🎉</div>
-      <div id="winner-name">Restaurant Name</div>
-      <button
-        id="close-modal"
-        onclick="document.getElementById('winner-overlay').style.display='none'"
-      >
-        Spin Again
-      </button>
-    </div>
+    #spin-btn:active {
+      transform: scale(0.95);
+    }
 
-    <script>
-      const params = new URLSearchParams(window.location.search);
-      const cuisine = params.get("c") || "Food";
-      const locationStr = params.get("l") || "Nearby";
-      const compressedData = params.get("data");
+    #spin-btn:disabled {
+      background: #555;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
 
-      let places = [];
-      if (compressedData) {
-        try {
-          const placeString = decodeURIComponent(escape(atob(compressedData)));
-          places = placeString.split("|");
-        } catch (e) {
-          console.error("Failed to decode data", e);
-          places = ["Error Loading Data"];
-        }
-      } else {
-        places = ["No Options Found"];
-      }
+    /* Winner modal */
+    #winner-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 100;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      backdrop-filter: blur(5px);
+      padding: 20px;
+    }
 
-      document.getElementById("title").innerText = `${cuisine} spots in ${locationStr}`;
+    #winner-title {
+      font-size: 28px;
+      color: #2ed573;
+      margin-bottom: 10px;
+    }
 
-      const canvas = document.getElementById("wheelCanvas");
-      const wheelContainer = document.getElementById("wheel-container");
-      const spinBtn = document.getElementById("spin-btn");
-      const ctx = canvas.getContext("2d");
+    #winner-name {
+      font-size: 34px;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+    }
 
-      // High-res math for perfect text alignment
-      const cx = 300,
-        cy = 300,
-        radius = 280;
-      const N = places.length || 1;
-      const arc = (2 * Math.PI) / N;
-      let angle = 0;
-      let isSpinning = false;
+    #close-modal {
+      background: #fff;
+      color: #1e1e2f;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
 
-      const colors = [
-        "#ff4757",
-        "#ffa502",
-        "#2ed573",
-        "#1e90ff",
-        "#3742fa",
-        "#ff6348",
-        "#eccc68",
-        "#7bed9f",
-        "#70a1ff",
-        "#5352ed",
-      ];
+<body>
 
-      function draw() {
-        ctx.clearRect(0, 0, 600, 600);
-        ctx.save();
-        ctx.translate(cx, cy);
-        ctx.rotate(angle);
+  <h2 id="title">Loading roulette...</h2>
 
-        for (let i = 0; i < N; i++) {
-          // Draw slices
-          ctx.beginPath();
-          ctx.moveTo(0, 0);
-          ctx.arc(0, 0, radius, i * arc, (i + 1) * arc);
-          ctx.fillStyle = colors[i % colors.length];
-          ctx.fill();
-          ctx.lineWidth = 4;
-          ctx.strokeStyle = "#1e1e2f";
-          ctx.stroke();
+  <div id="wheel-container">
+    <div id="pointer"></div>
+    <canvas id="wheelCanvas" width="600" height="600"></canvas>
+  </div>
 
-          // Draw Text
-          ctx.save();
-          const rot = N === 1 ? 0 : i * arc + arc / 2;
-          ctx.rotate(rot);
-          ctx.textAlign = "right";
-          ctx.textBaseline = "middle";
-          ctx.fillStyle = "#ffffff";
-          ctx.font = "bold 28px sans-serif";
+  <button id="spin-btn">SPIN ROULETTE</button>
 
-          let text = places[i] || "";
-          if (text.length > 15) text = text.substring(0, 13) + "...";
+  <div id="winner-overlay">
+    <div id="winner-title">🎉 WINNER 🎉</div>
+    <div id="winner-name">Restaurant</div>
+    <button id="close-modal">Spin Again</button>
+  </div>
 
-          ctx.fillText(text, radius - 30, 0); // Spaced perfectly from the edge
-          ctx.restore();
-        }
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const cuisine = params.get("c") || "Food";
+  const locationStr = params.get("l") || "Nearby";
 
-        // Inner white circle
-        ctx.beginPath();
-        ctx.arc(0, 0, 45, 0, 2 * Math.PI);
-        ctx.fillStyle = "#fff";
-        ctx.fill();
+  let places = [];
 
-        // Inner dark dot
-        ctx.beginPath();
-        ctx.arc(0, 0, 15, 0, 2 * Math.PI);
-        ctx.fillStyle = "#1e1e2f";
-        ctx.fill();
+  try {
+    const data = params.get("data");
+    if (data) {
+      const decoded = decodeURIComponent(escape(atob(data)));
+      places = decoded.split("|");
+    }
+  } catch (e) {
+    places = ["Error Loading Data"];
+  }
 
-        ctx.restore();
-      }
+  if (!places.length) places = ["No Results"];
 
+  document.getElementById("title").innerText =
+    `${cuisine} in ${locationStr}`;
+
+  const canvas = document.getElementById("wheelCanvas");
+  const ctx = canvas.getContext("2d");
+
+  const cx = 300, cy = 300, radius = 280;
+  const N = places.length;
+  const arc = (2 * Math.PI) / N;
+
+  let angle = 0;
+  let spinning = false;
+
+  const colors = ["#ff4757","#ffa502","#2ed573","#1e90ff","#3742fa","#ff6348"];
+
+  function draw() {
+    ctx.clearRect(0,0,600,600);
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(angle);
+
+    for (let i = 0; i < N; i++) {
+      ctx.beginPath();
+      ctx.moveTo(0,0);
+      ctx.arc(0,0,radius,i*arc,(i+1)*arc);
+      ctx.fillStyle = colors[i % colors.length];
+      ctx.fill();
+      ctx.strokeStyle = "#1e1e2f";
+      ctx.stroke();
+
+      ctx.save();
+      ctx.rotate(i*arc + arc/2);
+      ctx.fillStyle = "#fff";
+      ctx.font = "bold 22px sans-serif";
+      ctx.textAlign = "right";
+      ctx.textBaseline = "middle";
+
+      let text = places[i] || "";
+      if (text.length > 14) text = text.slice(0,12)+"...";
+
+      ctx.fillText(text, radius-20, 0);
+      ctx.restore();
+    }
+
+    // center
+    ctx.beginPath();
+    ctx.arc(0,0,40,0,Math.PI*2);
+    ctx.fillStyle = "#fff";
+    ctx.fill();
+
+    ctx.restore();
+  }
+
+  draw();
+
+  function spin() {
+    if (spinning) return;
+    spinning = true;
+
+    const btn = document.getElementById("spin-btn");
+    btn.disabled = true;
+    btn.innerText = "SPINNING...";
+
+    let velocity = Math.random()*0.2 + 0.35;
+
+    function animate() {
+      angle += velocity;
+      velocity *= 0.985;
       draw();
 
-      function triggerSpin() {
-        if (isSpinning) return;
-        isSpinning = true;
-        spinBtn.disabled = true;
-        spinBtn.innerText = "SPINNING...";
+      if (velocity < 0.002) {
+        spinning = false;
 
-        let velocity = Math.random() * 0.2 + 0.35;
+        let p = (-Math.PI/2 - angle) % (Math.PI*2);
+        if (p < 0) p += Math.PI*2;
 
-        function animate() {
-          angle += velocity;
-          velocity *= 0.985;
-          draw();
+        const index = Math.floor(p / arc);
+        const winner = places[index];
 
-          if (velocity < 0.002) {
-            isSpinning = false;
+        document.getElementById("winner-name").innerText = winner;
+        document.getElementById("winner-overlay").style.display = "flex";
 
-            let p = (-Math.PI / 2 - angle) % (2 * Math.PI);
-            if (p < 0) p += 2 * Math.PI;
-            const winnerIndex = Math.floor(p / arc);
-            const winner = places[winnerIndex];
-
-            document.getElementById("winner-name").innerText = winner;
-            document.getElementById("winner-overlay").style.display = "flex";
-
-            spinBtn.innerText = "SPIN ROULETTE";
-            spinBtn.disabled = false;
-          } else {
-            requestAnimationFrame(animate);
-          }
-        }
-        animate();
+        btn.innerText = "SPIN ROULETTE";
+        btn.disabled = false;
+      } else {
+        requestAnimationFrame(animate);
       }
+    }
 
-      spinBtn.addEventListener("click", triggerSpin);
-      wheelContainer.addEventListener("click", triggerSpin);
-    </script>
-  </body>
+    animate();
+  }
+
+  document.getElementById("spin-btn").onclick = spin;
+  document.getElementById("wheel-container").onclick = spin;
+
+  document.getElementById("close-modal").onclick = () => {
+    document.getElementById("winner-overlay").style.display = "none";
+  };
+</script>
+
+</body>
 </html>
