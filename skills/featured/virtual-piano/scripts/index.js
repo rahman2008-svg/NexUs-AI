@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Google LLC
+ * Copyright 2026 NexUs AI
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,25 @@
  * limitations under the License.
  */
 
-window['ai_edge_gallery_get_result'] = async (dataStr) => {
+window['nexus_ai_virtual_piano_result'] = async (dataStr) => {
   try {
-    // Points the app directly to your local UI!
+    
+    // 🎹 Load local piano UI with cache-busting
     const fullUrl = `ui.html?v=${Date.now()}`;
 
+    // 📦 Return structured response for NexUs AI runtime
     return JSON.stringify({
-      webview: {url: fullUrl},
-      result:
-          'Success. Tell the user to tap the preview card to play the piano.'
+      webview: {
+        url: fullUrl
+      },
+      result: "Success. Tap the preview card to open and play the virtual piano 🎹"
     });
 
-  } catch (e) {
-    console.error(e);
-    return JSON.stringify({error: `Failed to load piano: ${e.message}`});
+  } catch (error) {
+    console.error("Virtual Piano Error:", error);
+
+    return JSON.stringify({
+      error: `Failed to load virtual piano: ${error.message}`
+    });
   }
 };
