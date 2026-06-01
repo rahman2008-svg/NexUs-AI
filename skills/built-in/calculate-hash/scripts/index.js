@@ -1,5 +1,5 @@
 /*
- * Copyright 2026 Google LLC
+ * Copyright 2026 NexVora Lab's Ofc
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,21 +15,45 @@
  */
 
 async function digestMessage(message) {
-  const msgUint8 = new TextEncoder().encode(message); // encode as (utf-8) Uint8Array
-  const hashBuffer = await crypto.subtle.digest('SHA-1', msgUint8); // hash the message
-  const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
+  if (typeof message !== "string") {
+    throw new Error("Input must be a string");
+  }
+
+  const encoder = new TextEncoder();
+  const data = encoder.encode(message.trim());
+
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+
   const hashHex = hashArray
-    .map((b) => b.toString(16).padStart(2, '0'))
-    .join(''); // convert bytes to hex string
-  return {result: hashHex};
+    .map(b => b.toString(16).padStart(2, "0"))
+    .join("");
+
+  return {
+    algorithm: "SHA-256",
+    inputLength: message.length,
+    result: hashHex
+  };
 }
 
 window['ai_edge_gallery_get_result'] = async (data) => {
   try {
-    const jsonData = JSON.parse(data);
-    return JSON.stringify(await digestMessage(jsonData['text']));
+    const jsonData = JSON.parse(data || "{}");
+
+    if (!jsonData.text) {
+      throw new Error("Missing 'text' field");
+    }
+
+    const result = await digestMessage(jsonData.text);
+
+    return JSON.stringify(result);
+
   } catch (e) {
-    console.error(e);
-    return JSON.stringify({error: `Failed to calculate hash: ${e.message}`});
+    console.error("Hash Error:", e);
+
+    return JSON.stringify({
+      error: `Failed to calculate hash: ${e.message}`
+    });
   }
 };
