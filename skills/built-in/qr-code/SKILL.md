@@ -1,11 +1,23 @@
----
+--
 name: qr-code
-description: Generates a QR code for the given url.
+description: Generate a QR code for a given URL or text input.
 ---
 
-# Instructions
+# 📱 QR Code Generator Skill
 
-You MUST use the `run_js` tool with the following exact parameters:
+This skill generates a QR code from a provided URL or text string.
 
-- data: A JSON string with the following fields:
-  - url: String - the url to create QR code for
+---
+
+## ⚙️ Instructions
+
+You MUST call the `run_js` tool with the following exact parameters:
+
+---
+
+### 📥 data (JSON string)
+
+```json
+{
+  "url": "string (required) — the URL or text to encode into QR code"
+}
