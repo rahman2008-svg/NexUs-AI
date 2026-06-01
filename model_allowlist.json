@@ -1,70 +1,73 @@
 {
   "models": [
     {
-      "name": "Gemma-3n-E2B-it-int4",
+      "name": "NexUs-Gemma-3n-E2B",
       "modelId": "google/gemma-3n-E2B-it-litert-preview",
       "modelFile": "gemma-3n-E2B-it-int4.task",
-      "description": "Preview version of [Gemma 3n E2B](https://ai.google.dev/gemma/docs/gemma-3n) ready for deployment on Android using the [MediaPipe LLM Inference API](https://ai.google.dev/edge/mediapipe/solutions/genai/llm_inference). The current checkpoint only supports text and vision input, with 4096 context length.",
+      "description": "NexUs AI optimized Gemma 3n E2B model. Supports text and vision input with 4096 context length. Best balance between speed and intelligence.",
       "sizeInBytes": 3136226711,
       "estimatedPeakMemoryInBytes": 5905580032,
-      "version": "20250520",
+      "version": "2025.05.20",
       "llmSupportImage": true,
       "defaultConfig": {
-        "topK": 64,
-        "topP": 0.95,
-        "temperature": 1.0,
+        "topK": 50,
+        "topP": 0.9,
+        "temperature": 0.8,
         "maxTokens": 4096,
         "accelerators": "cpu,gpu"
       },
       "taskTypes": ["llm_chat", "llm_prompt_lab", "llm_ask_image"]
     },
+
     {
-      "name": "Gemma-3n-E4B-it-int4",
+      "name": "NexUs-Gemma-3n-E4B",
       "modelId": "google/gemma-3n-E4B-it-litert-preview",
       "modelFile": "gemma-3n-E4B-it-int4.task",
-      "description": "Preview version of [Gemma 3n E4B](https://ai.google.dev/gemma/docs/gemma-3n) ready for deployment on Android using the [MediaPipe LLM Inference API](https://ai.google.dev/edge/mediapipe/solutions/genai/llm_inference). The current checkpoint only supports text and vision input, with 4096 context length.",
+      "description": "High performance NexUs AI model based on Gemma 3n E4B. Best for deep reasoning, vision tasks and advanced chat experience.",
       "sizeInBytes": 4405655031,
       "estimatedPeakMemoryInBytes": 6979321856,
-      "version": "20250520",
+      "version": "2025.05.20",
       "llmSupportImage": true,
       "defaultConfig": {
         "topK": 64,
         "topP": 0.95,
-        "temperature": 1.0,
+        "temperature": 0.9,
         "maxTokens": 4096,
         "accelerators": "cpu,gpu"
       },
       "taskTypes": ["llm_chat", "llm_prompt_lab", "llm_ask_image"]
     },
+
     {
-      "name": "Gemma3-1B-IT q4",
+      "name": "NexUs-Light-Gemma-1B",
       "modelId": "litert-community/Gemma3-1B-IT",
       "modelFile": "Gemma3-1B-IT_multi-prefill-seq_q4_ekv2048.task",
-      "description": "A variant of [google/Gemma-3-1B-IT](https://huggingface.co/google/Gemma-3-1B-IT) with 4-bit quantization ready for deployment on Android using the [MediaPipe LLM Inference API](https://ai.google.dev/edge/mediapipe/solutions/genai/llm_inference)",
+      "description": "Lightweight NexUs AI model for fast responses on low-end devices. Optimized for speed and efficiency.",
       "sizeInBytes": 554661246,
       "estimatedPeakMemoryInBytes": 2147483648,
-      "version": "20250514",
+      "version": "2025.05.14",
       "defaultConfig": {
-        "topK": 64,
-        "topP": 0.95,
-        "temperature": 1.0,
+        "topK": 40,
+        "topP": 0.9,
+        "temperature": 0.7,
         "maxTokens": 1024,
         "accelerators": "gpu,cpu"
       },
       "taskTypes": ["llm_chat", "llm_prompt_lab"]
     },
+
     {
-      "name": "Qwen2.5-1.5B-Instruct q8",
+      "name": "NexUs-Qwen-1.5B-Fast",
       "modelId": "litert-community/Qwen2.5-1.5B-Instruct",
       "modelFile": "Qwen2.5-1.5B-Instruct_multi-prefill-seq_q8_ekv1280.task",
-      "description": "A variant of [Qwen/Qwen2.5-1.5B-Instruct](https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct) with 8-bit quantization ready for deployment on Android using the [MediaPipe LLM Inference API](https://ai.google.dev/edge/mediapipe/solutions/genai/llm_inference)",
+      "description": "Fast and efficient Qwen-based model for quick chat responses with low latency.",
       "sizeInBytes": 1625493432,
       "estimatedPeakMemoryInBytes": 2684354560,
-      "version": "20250514",
+      "version": "2025.05.14",
       "defaultConfig": {
-        "topK": 40,
-        "topP": 0.95,
-        "temperature": 1.0,
+        "topK": 30,
+        "topP": 0.9,
+        "temperature": 0.7,
         "maxTokens": 1024,
         "accelerators": "cpu"
       },
