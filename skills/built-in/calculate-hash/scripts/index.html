@@ -1,6 +1,6 @@
 <!--
 @license
-Copyright 2026 Google LLC
+Copyright 2026 NexVora Lab's Ofc
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,18 +13,84 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
-==============================================================================
 -->
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Calculate hash</title>
-  </head>
-  <body>
-    <script src="index.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+
+  <title>NexUs AI - Calculate Hash</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .box {
+      text-align: center;
+      padding: 30px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    h1 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #4ecca3;
+    }
+
+    p {
+      font-size: 14px;
+      opacity: 0.7;
+    }
+
+    .status {
+      margin-top: 15px;
+      font-size: 13px;
+      color: #45b7d1;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box">
+    <h1>NexUs AI Hash Engine</h1>
+    <p>Loading cryptographic module...</p>
+    <div class="status" id="status">Initializing index.js...</div>
+  </div>
+
+  <script>
+    try {
+      document.getElementById("status").innerText = "Loading script...";
+
+      const script = document.createElement("script");
+      script.src = "index.js";
+      script.onload = () => {
+        document.getElementById("status").innerText = "Ready ✔";
+      };
+      script.onerror = () => {
+        document.getElementById("status").innerText = "Failed to load index.js ❌";
+      };
+
+      document.body.appendChild(script);
+
+    } catch (e) {
+      document.getElementById("status").innerText = "Critical error: " + e.message;
+    }
+  </script>
+
+</body>
 </html>
