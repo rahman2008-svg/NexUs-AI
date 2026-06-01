@@ -1,9 +1,12 @@
-# @license
+# ==============================================================================
+# Project: NexUs AI
+# Company: NexVora Lab's Ofc
 # Copyright 2025 Google LLC
+# ==============================================================================
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
+# You may obtain a copy of the License at:
 #
 #     http://www.apache.org/licenses/LICENSE-2.0
 #
@@ -14,38 +17,62 @@
 # limitations under the License.
 # ==============================================================================
 
-# Gradle files
+
+# =========================
+# Gradle / Build System
+# =========================
 .gradle/
 build/
+**/build/
 
-# Local configuration file (sdk path, etc)
+# =========================
+# Local Configuration
+# =========================
 local.properties
 
-# Log/OS Files
+# =========================
+# Logs
+# =========================
 *.log
 
-# Android Studio generated files and folders
+# =========================
+# Android Studio / IDE
+# =========================
+.idea/
+*.iml
 captures/
 .externalNativeBuild/
 .cxx/
-*.apk
-output.json
 
-# IntelliJ
-*.iml
-.idea/
 misc.xml
 deploymentTargetDropDown.xml
 render.experimental.xml
 
-# Keystore files
+# =========================
+# APK / Build Outputs
+# =========================
+*.apk
+*.aab
+output.json
+
+# =========================
+# Keystore / Security Files
+# =========================
 *.jks
 *.keystore
 
-# Google Services (e.g. APIs or Firebase)
+# =========================
+# Google Services / Firebase
+# =========================
 google-services.json
 
+# =========================
 # Android Profiling
+# =========================
 *.hprof
 
+# =========================
+# OS Files
+# =========================
 .DS_Store
+Thumbs.db
